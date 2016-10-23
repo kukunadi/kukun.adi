@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hatam Tube</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="css/style.css"/> 
+<link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css"/>
+<script src="js/jquery-1.11.3.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('#login').submit(function() {
+		var email = $("#email").val();
+		var password = $("#password").val();
+		$.ajax({
+			type:'GET',
+			url: "http://localhost/android/login.php", 
+			data:{ email:email,password:password },
+			success: function(err) {
+				if(err=="1") alert("Username/Password Harus Terisi")
+				else if(err=="2") alert("Username/Password Salah")
+				else{
+					localStorage.setItem("email", email);
+					window.location="home.html";
+				}
+			}
+		})
+		return false;
+	});		
+});
+function CekSesi(){
+	if(localStorage.getItem('email')!=null) window.location="home.html";	
+}
+</script>
+</head>	
+<body onLoad="CekSesi()">
+<div align="center">
+	<div class="main">
+        <form class="form" method="post" id="login">
+          <div align="center">
+              <img src="img/logo_hatam.png" width="161" height="30"></br>
+              <img src="img/hatam.png" width="70"></br>
+          </div>
+          <label>Email :</label>
+          <input type="text" name="email" id="email">			
+          <label>Password :</label>
+          <input type="password" name="password" id="password" >						
+          <button type="submit" name="kirim" id="kirim" class="ui-btn ui-icon-check ui-btn-icon-left">Login</button>
+          <button class="ui-btn ui-icon-plus ui-btn-icon-left">Create User</button>
+        </form>   	
+	</div>	
+</div>
+</body>
+</html>
